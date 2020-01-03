@@ -228,6 +228,94 @@
 
 
   
+    <article id="post-jdk8 stream 基本使用" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2019/03/16/jdk8%20stream%20%E5%9F%BA%E6%9C%AC%E4%BD%BF%E7%94%A8/">jdk8 stream 基本使用（持续更新）</a>
+    </h1>
+  
+
+        
+        <a href="/2019/03/16/jdk8%20stream%20%E5%9F%BA%E6%9C%AC%E4%BD%BF%E7%94%A8/" class="archive-article-date">
+  	<time datetime="2019-03-16T03:43:06.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-03-16</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p><strong>目录 (Table of Contents)</strong></p>
+<ul>
+<li><a href="#过滤技巧">过滤技巧</a></li>
+<li><a href="#根据某一字段对数据进行分组">根据某一字段对数据进行分组</a></li>
+<li><a href="#根据某一字段计算">根据某一字段计算</a></li>
+<li><a href="#获得属性内某一字段的结果集">获得属性内某一字段的结果集</a></li>
+</ul>
+<h1 id="过滤技巧"><a href="#过滤技巧" class="headerlink" title="过滤技巧"></a>过滤技巧</h1><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">List&lt;Student&gt; list = <span class="keyword">new</span> ArrayList&lt;&gt;();</span><br><span class="line"><span class="comment">// 获得性别为男的学生数量</span></span><br><span class="line"><span class="keyword">int</span> num = list.stream()</span><br><span class="line">              .filter(c&gt;c.getSex().equals(<span class="string">"男"</span>))</span><br><span class="line">              <span class="comment">// 去重</span></span><br><span class="line">              .distinct()</span><br><span class="line">              .collect(Collectors.toList())</span><br><span class="line">              .size();</span><br><span class="line"></span><br><span class="line">list.filter(c&gt;c.getSex().equals(<span class="string">"男"</span>))</span><br><span class="line">    .forEach(x-&gt;&#123;</span><br><span class="line">    <span class="comment">// 只循环所有性别为男的</span></span><br><span class="line">    &#125;);</span><br></pre></td></tr></table></figure>
+
+<h1 id="根据某一字段对数据进行分组"><a href="#根据某一字段对数据进行分组" class="headerlink" title="根据某一字段对数据进行分组"></a>根据某一字段对数据进行分组</h1><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">List&lt;Student&gt; list = <span class="keyword">new</span> ArrayList&lt;&gt;();</span><br><span class="line">Map&lt;String, List&lt;Student&gt;&gt; map = list.steam()</span><br><span class="line">    .collect(Collectors.groupingBy(t-&gt;t.getSex()));</span><br></pre></td></tr></table></figure>
+
+<h1 id="根据某一字段计算"><a href="#根据某一字段计算" class="headerlink" title="根据某一字段计算"></a>根据某一字段计算</h1><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">List&lt;Student&gt; list = <span class="keyword">new</span> ArrayList&lt;&gt;();</span><br><span class="line">Double average= list.steam()</span><br><span class="line">    .mapToDouble(Student::getAge)</span><br><span class="line">    .average()</span><br><span class="line">    .getAsDouble();</span><br><span class="line"></span><br><span class="line">Double sum= list.steam()</span><br><span class="line">    .mapToDouble(Student::getAge)</span><br><span class="line">    .average()</span><br><span class="line">    .getAsDouble();</span><br></pre></td></tr></table></figure>
+
+<h1 id="获得属性内某一字段的结果集"><a href="#获得属性内某一字段的结果集" class="headerlink" title="获得属性内某一字段的结果集"></a>获得属性内某一字段的结果集</h1><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">List&lt;Student&gt; list = <span class="keyword">new</span> ArrayList&lt;&gt;();</span><br><span class="line">List&lt;String&gt; sex = list.steam()</span><br><span class="line">    .map(Student::getSex)</span><br><span class="line">    .collect(Collectors.toList());</span><br></pre></td></tr></table></figure>
+
+
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">jdk</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+      
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2019/03/16/jdk8%20stream%20%E5%9F%BA%E6%9C%AC%E4%BD%BF%E7%94%A8/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+  
   
 
 
@@ -322,6 +410,10 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color1">Dubbo</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">jdk</a>
               </li>
             
             <div class="clearfix"></div>
