@@ -6,19 +6,14 @@
   <meta name="renderer" content="webkit">
   <meta http-equiv="X-UA-Compatible" content="IE=edge" >
   <link rel="dns-prefetch" href="http://yoursite.com">
-  <title>jdk8 stream 基本使用（持续更新） | Hexo</title>
+  <title>Tag: Stackoverflow | Hexo</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="目录 (Table of Contents)  过滤技巧 根据某一字段对数据进行分组 根据某一字段计算 获得属性内某一字段的结果集  过滤技巧12345678910111213List&lt;Student&gt; list &#x3D; new ArrayList&lt;&gt;();&#x2F;&#x2F; 获得性别为男的学生数量int num &#x3D; list.stream()              .filter(c&amp;">
-<meta property="og:type" content="article">
-<meta property="og:title" content="jdk8 stream 基本使用（持续更新）">
-<meta property="og:url" content="http://yoursite.com/2019/03/16/jdk8%20stream%20%E5%9F%BA%E6%9C%AC%E4%BD%BF%E7%94%A8/index.html">
+  <meta property="og:type" content="website">
+<meta property="og:title" content="Hexo">
+<meta property="og:url" content="http://yoursite.com/tags/Stackoverflow/index.html">
 <meta property="og:site_name" content="Hexo">
-<meta property="og:description" content="目录 (Table of Contents)  过滤技巧 根据某一字段对数据进行分组 根据某一字段计算 获得属性内某一字段的结果集  过滤技巧12345678910111213List&lt;Student&gt; list &#x3D; new ArrayList&lt;&gt;();&#x2F;&#x2F; 获得性别为男的学生数量int num &#x3D; list.stream()              .filter(c&amp;">
 <meta property="og:locale" content="en_US">
-<meta property="article:published_time" content="2019-03-16T03:43:06.000Z">
-<meta property="article:modified_time" content="2020-01-03T09:47:25.612Z">
 <meta property="article:author" content="Guang Luo">
-<meta property="article:tag" content="jdk">
 <meta name="twitter:card" content="summary">
   
     <link rel="alternative" href="/atom.xml" title="Hexo" type="application/atom+xml">
@@ -155,185 +150,64 @@
             <canvas data-colors="#eaeaea" data-sectionHeight="100" data-contentId="js-content" id="myCanvas1" class="anm-canvas"></canvas>
           </div>
           <div id="js-content" class="content-ll">
-            <article id="post-jdk8 stream 基本使用" class="article article-type-post " itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
+            
   
-    <h1 class="article-title" itemprop="name">
-      jdk8 stream 基本使用（持续更新）
+  
+    
+    
+      
+      
+      <section class="archives-wrap">
+        <div class="archive-year-wrap">
+          <a href="/archives/2020" class="archive-year">2020</a>
+        </div>
+        <div class="archives">
+    
+    <article class="archive-article archive-type-post">
+  <div class="archive-article-inner">
+    <header class="archive-article-header">
+      	<div class="article-meta">
+	      	<a href="/2020/01/10/%E3%80%90%E6%8F%90%E5%8D%87%E8%8B%B1%E8%AF%AD%E4%B8%93%E6%A0%8F%E3%80%91Stackoverflow%E9%AB%98%E9%A2%91%E8%8B%B1%E6%96%87%E8%AF%8D%E6%B1%87%E6%B1%87%E6%80%BB/" class="archive-article-date">
+  	<time datetime="2020-01-10T08:43:06.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-01-10</time>
+</a>
+        </div>
+    	 
+  
+    <h1 itemprop="name">
+      <a class="archive-article-title" href="/2020/01/10/%E3%80%90%E6%8F%90%E5%8D%87%E8%8B%B1%E8%AF%AD%E4%B8%93%E6%A0%8F%E3%80%91Stackoverflow%E9%AB%98%E9%A2%91%E8%8B%B1%E6%96%87%E8%AF%8D%E6%B1%87%E6%B1%87%E6%80%BB/">【提升英语专栏】Stackoverflow高频英文词汇汇总</a>
     </h1>
   
 
-        
-        <a href="/2019/03/16/jdk8%20stream%20%E5%9F%BA%E6%9C%AC%E4%BD%BF%E7%94%A8/" class="archive-article-date">
-  	<time datetime="2019-03-16T03:43:06.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-03-16</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p><strong>目录 (Table of Contents)</strong></p>
-<ul>
-<li><a href="#过滤技巧">过滤技巧</a></li>
-<li><a href="#根据某一字段对数据进行分组">根据某一字段对数据进行分组</a></li>
-<li><a href="#根据某一字段计算">根据某一字段计算</a></li>
-<li><a href="#获得属性内某一字段的结果集">获得属性内某一字段的结果集</a></li>
-</ul>
-<h1 id="过滤技巧"><a href="#过滤技巧" class="headerlink" title="过滤技巧"></a>过滤技巧</h1><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">List&lt;Student&gt; list = <span class="keyword">new</span> ArrayList&lt;&gt;();</span><br><span class="line"><span class="comment">// 获得性别为男的学生数量</span></span><br><span class="line"><span class="keyword">int</span> num = list.stream()</span><br><span class="line">              .filter(c&gt;c.getSex().equals(<span class="string">"男"</span>))</span><br><span class="line">              <span class="comment">// 去重</span></span><br><span class="line">              .distinct()</span><br><span class="line">              .collect(Collectors.toList())</span><br><span class="line">              .size();</span><br><span class="line"></span><br><span class="line">list.filter(c&gt;c.getSex().equals(<span class="string">"男"</span>))</span><br><span class="line">    .forEach(x-&gt;&#123;</span><br><span class="line">    <span class="comment">// 只循环所有性别为男的</span></span><br><span class="line">    &#125;);</span><br></pre></td></tr></table></figure>
-
-<h1 id="根据某一字段对数据进行分组"><a href="#根据某一字段对数据进行分组" class="headerlink" title="根据某一字段对数据进行分组"></a>根据某一字段对数据进行分组</h1><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">List&lt;Student&gt; list = <span class="keyword">new</span> ArrayList&lt;&gt;();</span><br><span class="line">Map&lt;String, List&lt;Student&gt;&gt; map = list.steam()</span><br><span class="line">    .collect(Collectors.groupingBy(t-&gt;t.getSex()));</span><br></pre></td></tr></table></figure>
-
-<h1 id="根据某一字段计算"><a href="#根据某一字段计算" class="headerlink" title="根据某一字段计算"></a>根据某一字段计算</h1><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">List&lt;Student&gt; list = <span class="keyword">new</span> ArrayList&lt;&gt;();</span><br><span class="line">Double average= list.steam()</span><br><span class="line">    .mapToDouble(Student::getAge)</span><br><span class="line">    .average()</span><br><span class="line">    .getAsDouble();</span><br><span class="line"></span><br><span class="line">Double sum= list.steam()</span><br><span class="line">    .mapToDouble(Student::getAge)</span><br><span class="line">    .average()</span><br><span class="line">    .getAsDouble();</span><br></pre></td></tr></table></figure>
-
-<h1 id="获得属性内某一字段的结果集"><a href="#获得属性内某一字段的结果集" class="headerlink" title="获得属性内某一字段的结果集"></a>获得属性内某一字段的结果集</h1><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">List&lt;Student&gt; list = <span class="keyword">new</span> ArrayList&lt;&gt;();</span><br><span class="line">List&lt;String&gt; sex = list.steam()</span><br><span class="line">    .map(Student::getSex)</span><br><span class="line">    .collect(Collectors.toList());</span><br></pre></td></tr></table></figure>
-
-
-      
-
-      
-        <div class="page-reward">
-          <a href="javascript:;" class="page-reward-btn tooltip-top">
-            <div class="tooltip tooltip-east">
-            <span class="tooltip-item">
-              赏
-            </span>
-            <span class="tooltip-content">
-              <span class="tooltip-text">
-                <span class="tooltip-inner">
-                  <p class="reward-p"><i class="icon icon-quo-left"></i>谢谢你请我吃糖果<i class="icon icon-quo-right"></i></p>
-                  <div class="reward-box">
-                    
-                    
-                  </div>
-                </span>
-              </span>
-            </span>
-          </div>
-          </a>
-        </div>
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
+        <div class="article-info info-on-right">
+          
 	<div class="article-tag tagcloud">
 		<i class="icon-price-tags icon"></i>
 		<ul class="article-tag-list">
 			 
         		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">jdk</a>
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">英语</a>
+        		</li>
+      		 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">Stackoverflow</a>
         		</li>
       		
 		</ul>
 	</div>
 
-      
+          
 
-      
-
-      
-        
-<div class="share-btn share-icons tooltip-left">
-  <div class="tooltip tooltip-east">
-    <span class="tooltip-item">
-      <a href="javascript:;" class="share-sns share-outer">
-        <i class="icon icon-share"></i>
-      </a>
-    </span>
-    <span class="tooltip-content">
-      <div class="share-wrap">
-        <div class="share-icons">
-          <a class="weibo share-sns" href="javascript:;" data-type="weibo">
-            <i class="icon icon-weibo"></i>
-          </a>
-          <a class="weixin share-sns wxFab" href="javascript:;" data-type="weixin">
-            <i class="icon icon-weixin"></i>
-          </a>
-          <a class="qq share-sns" href="javascript:;" data-type="qq">
-            <i class="icon icon-qq"></i>
-          </a>
-          <a class="douban share-sns" href="javascript:;" data-type="douban">
-            <i class="icon icon-douban"></i>
-          </a>
-          <a class="qzone share-sns" href="javascript:;" data-type="qzone">
-            <i class="icon icon-qzone"></i>
-          </a>
-          <a class="facebook share-sns" href="javascript:;" data-type="facebook">
-            <i class="icon icon-facebook"></i>
-          </a>
-          <a class="twitter share-sns" href="javascript:;" data-type="twitter">
-            <i class="icon icon-twitter"></i>
-          </a>
-          <a class="google share-sns" href="javascript:;" data-type="google">
-            <i class="icon icon-google"></i>
-          </a>
         </div>
-      </div>
-    </span>
-  </div>
-</div>
-
-<div class="page-modal wx-share js-wx-box">
-    <a class="close js-modal-close" href="javascript:;"><i class="icon icon-close"></i></a>
-    <p>扫一扫，分享到微信</p>
-    <div class="wx-qrcode">
-      <img src="//pan.baidu.com/share/qrcode?url=http://yoursite.com/2019/03/16/jdk8%20stream%20%E5%9F%BA%E6%9C%AC%E4%BD%BF%E7%94%A8/" alt="微信分享二维码">
-    </div>
-</div>
-
-<div class="mask js-mask"></div>
-      
-      <div class="clearfix"></div>
-    </div>
+        <div class="clearfix"></div>
+    </header>
   </div>
 </article>
-
-  
-<nav id="article-nav">
-  
-    <a href="/2020/01/03/Dubbo%E4%BD%BF%E7%94%A8%E8%87%AA%E5%AE%9A%E4%B9%89Cluster%E6%96%B9%E6%B3%95/" id="article-nav-newer" class="article-nav-link-wrap">
-      <i class="icon-circle-left"></i>
-      <div class="article-nav-title">
-        
-          Dubbo使用自定义Cluster方法
-        
-      </div>
-    </a>
   
   
-</nav>
-
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-  
-  
+    </div></section>
   
 
-  
-
-  
-
-  
+    
 
 
           </div>
@@ -356,9 +230,9 @@
 	var yiliaConfig = {
 		mathjax: false,
 		isHome: false,
-		isPost: true,
+		isPost: false,
 		isArchive: false,
-		isTag: false,
+		isTag: true,
 		isCategory: false,
 		open_in_new: false,
 		toc_hide_index: true,
