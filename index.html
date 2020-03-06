@@ -152,6 +152,98 @@
           <div id="js-content" class="content-ll">
             
   
+    <article id="post-python数据可视化方式" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2020/03/03/python%E6%95%B0%E6%8D%AE%E5%8F%AF%E8%A7%86%E5%8C%96%E6%96%B9%E5%BC%8F/">python数据可视化方式（持续更新）</a>
+    </h1>
+  
+
+        
+        <a href="/2020/03/03/python%E6%95%B0%E6%8D%AE%E5%8F%AF%E8%A7%86%E5%8C%96%E6%96%B9%E5%BC%8F/" class="archive-article-date">
+  	<time datetime="2020-03-03T02:43:06.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-03-03</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p><strong>目录 (Table of Contents)</strong></p>
+<ul>
+<li><a href="#初始准备">初始准备包引入</a></li>
+<li><a href="#解决图表显示方块丢失中文问题">解决图表显示方块丢失中文问题</a></li>
+<li><a href="#例1：（树状图、箱形图）比较地区与房屋单价金额数量的关系">比较地区与房屋单价金额数量的关系</a></li>
+<li><a href="#例2：（质量直方图、线性集中关系图、树状图）面积的大小比例，面积与价格关系">房屋面积的大小比例，面积与价格关系</a></li>
+</ul>
+<h1 id="初始准备"><a href="#初始准备" class="headerlink" title="初始准备"></a>初始准备</h1><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> pandas <span class="keyword">as</span> pd</span><br><span class="line"><span class="keyword">import</span> matplotlib.pyplot <span class="keyword">as</span> plt</span><br><span class="line"><span class="keyword">import</span> seaborn <span class="keyword">as</span> sns</span><br><span class="line"><span class="keyword">import</span> re</span><br></pre></td></tr></table></figure>
+
+<h1 id="解决图表显示方块丢失中文问题"><a href="#解决图表显示方块丢失中文问题" class="headerlink" title="解决图表显示方块丢失中文问题"></a>解决图表显示方块丢失中文问题</h1><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">plt.rcParams[<span class="string">'font.sans-serif'</span>] = [<span class="string">'SimHei'</span>]  <span class="comment"># 中文字体设置-黑体</span></span><br><span class="line">plt.rcParams[<span class="string">'axes.unicode_minus'</span>] = <span class="literal">False</span>  <span class="comment"># 解决保存图像是负号'-'显示为方块的问题</span></span><br><span class="line">sns.set(font=<span class="string">'SimHei'</span>)  <span class="comment"># 解决Seaborn中文显示问题</span></span><br></pre></td></tr></table></figure>
+
+<h1 id="例1：（树状图、箱形图）比较地区与房屋单价金额数量的关系"><a href="#例1：（树状图、箱形图）比较地区与房屋单价金额数量的关系" class="headerlink" title="例1：（树状图、箱形图）比较地区与房屋单价金额数量的关系"></a>例1：（树状图、箱形图）比较地区与房屋单价金额数量的关系</h1><h2 id="1-数据结构"><a href="#1-数据结构" class="headerlink" title="1.  数据结构"></a>1.  数据结构</h2><h2 id="2-关系展示"><a href="#2-关系展示" class="headerlink" title="2.  关系展示"></a>2.  关系展示</h2><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 设置三个图表ax1,ax2,ax3的大小 : 3列1行 每个12×18大小</span></span><br><span class="line">f,[ax1,ax2,ax3] = plt.subplots(<span class="number">3</span>,<span class="number">1</span>,figsize=(<span class="number">12</span>,<span class="number">18</span>))</span><br><span class="line"></span><br><span class="line"><span class="comment"># 1.数据准备</span></span><br><span class="line">df_house_mean = house_df.groupby(<span class="string">'Region'</span>)[<span class="string">'houseSinglePrice'</span>].mean().sort_values(ascending=<span class="literal">False</span>).to_frame().reset_index()</span><br><span class="line"></span><br><span class="line"><span class="comment"># 1.数据展示</span></span><br><span class="line">sns.barplot(x=<span class="string">'Region'</span>, y=<span class="string">'houseSinglePrice'</span>, palette=<span class="string">'Blues_d'</span>, data=df_house_mean, ax=ax1)</span><br><span class="line">ax1.set_title(<span class="string">'成都各地区没平米单价对比'</span>)</span><br><span class="line">ax1.set_xlabel(<span class="string">'区域'</span>)</span><br><span class="line">ax1.set_ylabel(<span class="string">'每平米单价'</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment"># 2.数据准备</span></span><br><span class="line">df_house_count = house_df.groupby(<span class="string">'Region'</span>)[<span class="string">'houseId'</span>].count().sort_values(ascending=<span class="literal">False</span>).to_frame().reset_index()</span><br><span class="line">df_house_count.rename(columns = &#123;<span class="string">'houseId'</span>:<span class="string">'Count'</span>&#125;,inplace=<span class="string">'True'</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment"># 2.数据展示</span></span><br><span class="line">sns.barplot(x=<span class="string">'Region'</span>, y=<span class="string">'Count'</span>, palette=<span class="string">'Greens_d'</span>, data=df_house_count, ax=ax2)</span><br><span class="line">ax2.set_title(<span class="string">'成都各区二手房数量对比'</span>)</span><br><span class="line">ax2.set_xlabel(<span class="string">'区域'</span>)</span><br><span class="line">ax2.set_ylabel(<span class="string">'数量'</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment"># 3.数据展示</span></span><br><span class="line">sns.boxplot(x=<span class="string">'Region'</span>, y=<span class="string">'houseTotalMoney'</span>, data=house_df, ax=ax3)</span><br><span class="line">ax3.set_title(<span class="string">'成都各区二手房房屋总价'</span>)</span><br><span class="line">ax3.set_xlabel(<span class="string">'区域'</span>)</span><br><span class="line">ax3.set_ylabel(<span class="string">'房屋总价'</span>)</span><br></pre></td></tr></table></figure>
+<p><img src="/2020/03/03/python%E6%95%B0%E6%8D%AE%E5%8F%AF%E8%A7%86%E5%8C%96%E6%96%B9%E5%BC%8F/%E4%BE%8B1.png" alt="例1"></p>
+<h1 id="例2：（质量直方图、线性集中关系图、树状图）面积的大小比例，面积与价格关系"><a href="#例2：（质量直方图、线性集中关系图、树状图）面积的大小比例，面积与价格关系" class="headerlink" title="例2：（质量直方图、线性集中关系图、树状图）面积的大小比例，面积与价格关系"></a>例2：（质量直方图、线性集中关系图、树状图）面积的大小比例，面积与价格关系</h1><h2 id="1-数据结构-1"><a href="#1-数据结构-1" class="headerlink" title="1.  数据结构"></a>1.  数据结构</h2><h2 id="2-关系展示-1"><a href="#2-关系展示-1" class="headerlink" title="2.  关系展示"></a>2.  关系展示</h2><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 设置两个图表ax1,ax2的大小 : 1列2行 每个16×6大小</span></span><br><span class="line">f, [ax1,ax2] = plt.subplots(<span class="number">1</span>, <span class="number">2</span>, figsize=(<span class="number">16</span>, <span class="number">6</span>))</span><br><span class="line"></span><br><span class="line"><span class="comment"># 房屋面积</span></span><br><span class="line">sns.distplot(house_df[<span class="string">'houseBuildingArea'</span>], ax=ax1, color=<span class="string">'r'</span>)</span><br><span class="line">sns.kdeplot(house_df[<span class="string">'houseBuildingArea'</span>], shade=<span class="literal">True</span>, ax=ax1)</span><br><span class="line">ax1.set_xlabel(<span class="string">'面积'</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment"># 房屋面积和价格的关系</span></span><br><span class="line">sns.regplot(x=<span class="string">'houseBuildingArea'</span>, y=<span class="string">'houseTotalMoney'</span>, data=house_df, ax=ax2)</span><br><span class="line">ax2.set_xlabel(<span class="string">'面积'</span>)</span><br><span class="line">ax2.set_ylabel(<span class="string">'总价'</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment"># -------------------------------------------------------------------------------------------</span></span><br><span class="line"></span><br><span class="line">f, [ax1, ax2] = plt.subplots(<span class="number">1</span>, <span class="number">2</span>, figsize=(<span class="number">16</span>, <span class="number">8</span>))</span><br><span class="line"></span><br><span class="line"><span class="comment"># 数据准备</span></span><br><span class="line">elevator_df =  house_df[house_df[<span class="string">'houseElevator'</span>] != <span class="string">'暂无数据'</span>]</span><br><span class="line">elevator_df[<span class="string">'houseElevator'</span>].value_counts()</span><br><span class="line"></span><br><span class="line">sns.countplot(x = <span class="string">'houseElevator'</span>,data = elevator_df, ax=ax1)</span><br><span class="line">ax1.set_title(<span class="string">'有无电梯数量对比'</span>, fontsize=<span class="number">15</span>)</span><br><span class="line">ax1.set_xlabel(<span class="string">'是否有电梯'</span>)</span><br><span class="line">ax1.set_ylabel(<span class="string">'数量'</span>)</span><br><span class="line"></span><br><span class="line">sns.barplot(x=<span class="string">'houseElevator'</span>, y=<span class="string">'houseSinglePrice'</span>, data=elevator_df, ax=ax2)</span><br><span class="line">ax2.set_title(<span class="string">'有无电梯房价对比'</span>)</span><br><span class="line">ax2.set_xlabel(<span class="string">'是否有电梯'</span>)</span><br><span class="line">ax2.set_ylabel(<span class="string">'单价'</span>)</span><br></pre></td></tr></table></figure>
+<p><img src="/2020/03/03/python%E6%95%B0%E6%8D%AE%E5%8F%AF%E8%A7%86%E5%8C%96%E6%96%B9%E5%BC%8F/%E4%BE%8B2-1.png" alt="例2-1"><br><img src="/2020/03/03/python%E6%95%B0%E6%8D%AE%E5%8F%AF%E8%A7%86%E5%8C%96%E6%96%B9%E5%BC%8F/%E4%BE%8B2-2.png" alt="例2-2"></p>
+
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color2">python</a>
+        		</li>
+      		 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color2">pandas</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+      
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2020/03/03/python%E6%95%B0%E6%8D%AE%E5%8F%AF%E8%A7%86%E5%8C%96%E6%96%B9%E5%BC%8F/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+  
     <article id="post-【提升英语专栏】Stackoverflow高频英文词汇汇总" class="article article-type-post  article-index" itemscope itemprop="blogPost">
   <div class="article-inner">
     
@@ -35509,6 +35601,14 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color4">Stackoverflow</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color2">python</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color2">pandas</a>
               </li>
             
             <div class="clearfix"></div>

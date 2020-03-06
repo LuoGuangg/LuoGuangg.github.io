@@ -6,20 +6,25 @@
   <meta name="renderer" content="webkit">
   <meta http-equiv="X-UA-Compatible" content="IE=edge" >
   <link rel="dns-prefetch" href="http://yoursite.com">
-  <title>jdk8 stream 基本使用（持续更新） | Hexo</title>
+  <title>python数据可视化方式（持续更新） | Hexo</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="目录 (Table of Contents)  过滤技巧 根据某一字段对数据进行分组 根据某一字段计算 获得属性内某一字段的结果集  过滤技巧12345678910111213List&lt;Student&gt; list &#x3D; new ArrayList&lt;&gt;();&#x2F;&#x2F; 获得性别为男的学生数量int num &#x3D; list.stream()              .filter(c&amp;">
+  <meta name="description" content="目录 (Table of Contents)  初始准备包引入 解决图表显示方块丢失中文问题 比较地区与房屋单价金额数量的关系 房屋面积的大小比例，面积与价格关系  初始准备1234import pandas as pdimport matplotlib.pyplot as pltimport seaborn as snsimport re  解决图表显示方块丢失中文问题123plt.rcPara">
 <meta property="og:type" content="article">
-<meta property="og:title" content="jdk8 stream 基本使用（持续更新）">
-<meta property="og:url" content="http://yoursite.com/2019/03/16/jdk8%20stream%20%E5%9F%BA%E6%9C%AC%E4%BD%BF%E7%94%A8/index.html">
+<meta property="og:title" content="python数据可视化方式（持续更新）">
+<meta property="og:url" content="http://yoursite.com/2020/03/03/python%E6%95%B0%E6%8D%AE%E5%8F%AF%E8%A7%86%E5%8C%96%E6%96%B9%E5%BC%8F/index.html">
 <meta property="og:site_name" content="Hexo">
-<meta property="og:description" content="目录 (Table of Contents)  过滤技巧 根据某一字段对数据进行分组 根据某一字段计算 获得属性内某一字段的结果集  过滤技巧12345678910111213List&lt;Student&gt; list &#x3D; new ArrayList&lt;&gt;();&#x2F;&#x2F; 获得性别为男的学生数量int num &#x3D; list.stream()              .filter(c&amp;">
+<meta property="og:description" content="目录 (Table of Contents)  初始准备包引入 解决图表显示方块丢失中文问题 比较地区与房屋单价金额数量的关系 房屋面积的大小比例，面积与价格关系  初始准备1234import pandas as pdimport matplotlib.pyplot as pltimport seaborn as snsimport re  解决图表显示方块丢失中文问题123plt.rcPara">
 <meta property="og:locale" content="en_US">
-<meta property="article:published_time" content="2019-03-16T03:43:06.000Z">
-<meta property="article:modified_time" content="2020-01-03T09:47:25.612Z">
+<meta property="og:image" content="http://yoursite.com/2020/03/03/python%E6%95%B0%E6%8D%AE%E5%8F%AF%E8%A7%86%E5%8C%96%E6%96%B9%E5%BC%8F/%E4%BE%8B1.png">
+<meta property="og:image" content="http://yoursite.com/2020/03/03/python%E6%95%B0%E6%8D%AE%E5%8F%AF%E8%A7%86%E5%8C%96%E6%96%B9%E5%BC%8F/%E4%BE%8B2-1.png">
+<meta property="og:image" content="http://yoursite.com/2020/03/03/python%E6%95%B0%E6%8D%AE%E5%8F%AF%E8%A7%86%E5%8C%96%E6%96%B9%E5%BC%8F/%E4%BE%8B2-2.png">
+<meta property="article:published_time" content="2020-03-03T02:43:06.000Z">
+<meta property="article:modified_time" content="2020-03-06T03:19:09.037Z">
 <meta property="article:author" content="Guang Luo">
-<meta property="article:tag" content="jdk">
+<meta property="article:tag" content="python">
+<meta property="article:tag" content="pandas">
 <meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://yoursite.com/2020/03/03/python%E6%95%B0%E6%8D%AE%E5%8F%AF%E8%A7%86%E5%8C%96%E6%96%B9%E5%BC%8F/%E4%BE%8B1.png">
   
     <link rel="alternative" href="/atom.xml" title="Hexo" type="application/atom+xml">
   
@@ -155,20 +160,20 @@
             <canvas data-colors="#eaeaea" data-sectionHeight="100" data-contentId="js-content" id="myCanvas1" class="anm-canvas"></canvas>
           </div>
           <div id="js-content" class="content-ll">
-            <article id="post-jdk8 stream 基本使用" class="article article-type-post " itemscope itemprop="blogPost">
+            <article id="post-python数据可视化方式" class="article article-type-post " itemscope itemprop="blogPost">
   <div class="article-inner">
     
       <header class="article-header">
         
   
     <h1 class="article-title" itemprop="name">
-      jdk8 stream 基本使用（持续更新）
+      python数据可视化方式（持续更新）
     </h1>
   
 
         
-        <a href="/2019/03/16/jdk8%20stream%20%E5%9F%BA%E6%9C%AC%E4%BD%BF%E7%94%A8/" class="archive-article-date">
-  	<time datetime="2019-03-16T03:43:06.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-03-16</time>
+        <a href="/2020/03/03/python%E6%95%B0%E6%8D%AE%E5%8F%AF%E8%A7%86%E5%8C%96%E6%96%B9%E5%BC%8F/" class="archive-article-date">
+  	<time datetime="2020-03-03T02:43:06.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-03-03</time>
 </a>
         
       </header>
@@ -177,19 +182,19 @@
       
         <p><strong>目录 (Table of Contents)</strong></p>
 <ul>
-<li><a href="#过滤技巧">过滤技巧</a></li>
-<li><a href="#根据某一字段对数据进行分组">根据某一字段对数据进行分组</a></li>
-<li><a href="#根据某一字段计算">根据某一字段计算</a></li>
-<li><a href="#获得属性内某一字段的结果集">获得属性内某一字段的结果集</a></li>
+<li><a href="#初始准备">初始准备包引入</a></li>
+<li><a href="#解决图表显示方块丢失中文问题">解决图表显示方块丢失中文问题</a></li>
+<li><a href="#例1：（树状图、箱形图）比较地区与房屋单价金额数量的关系">比较地区与房屋单价金额数量的关系</a></li>
+<li><a href="#例2：（质量直方图、线性集中关系图、树状图）面积的大小比例，面积与价格关系">房屋面积的大小比例，面积与价格关系</a></li>
 </ul>
-<h1 id="过滤技巧"><a href="#过滤技巧" class="headerlink" title="过滤技巧"></a>过滤技巧</h1><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">List&lt;Student&gt; list = <span class="keyword">new</span> ArrayList&lt;&gt;();</span><br><span class="line"><span class="comment">// 获得性别为男的学生数量</span></span><br><span class="line"><span class="keyword">int</span> num = list.stream()</span><br><span class="line">              .filter(c&gt;c.getSex().equals(<span class="string">"男"</span>))</span><br><span class="line">              <span class="comment">// 去重</span></span><br><span class="line">              .distinct()</span><br><span class="line">              .collect(Collectors.toList())</span><br><span class="line">              .size();</span><br><span class="line"></span><br><span class="line">list.filter(c&gt;c.getSex().equals(<span class="string">"男"</span>))</span><br><span class="line">    .forEach(x-&gt;&#123;</span><br><span class="line">    <span class="comment">// 只循环所有性别为男的</span></span><br><span class="line">    &#125;);</span><br></pre></td></tr></table></figure>
+<h1 id="初始准备"><a href="#初始准备" class="headerlink" title="初始准备"></a>初始准备</h1><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> pandas <span class="keyword">as</span> pd</span><br><span class="line"><span class="keyword">import</span> matplotlib.pyplot <span class="keyword">as</span> plt</span><br><span class="line"><span class="keyword">import</span> seaborn <span class="keyword">as</span> sns</span><br><span class="line"><span class="keyword">import</span> re</span><br></pre></td></tr></table></figure>
 
-<h1 id="根据某一字段对数据进行分组"><a href="#根据某一字段对数据进行分组" class="headerlink" title="根据某一字段对数据进行分组"></a>根据某一字段对数据进行分组</h1><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">List&lt;Student&gt; list = <span class="keyword">new</span> ArrayList&lt;&gt;();</span><br><span class="line">Map&lt;String, List&lt;Student&gt;&gt; map = list.steam()</span><br><span class="line">    .collect(Collectors.groupingBy(t-&gt;t.getSex()));</span><br></pre></td></tr></table></figure>
+<h1 id="解决图表显示方块丢失中文问题"><a href="#解决图表显示方块丢失中文问题" class="headerlink" title="解决图表显示方块丢失中文问题"></a>解决图表显示方块丢失中文问题</h1><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">plt.rcParams[<span class="string">'font.sans-serif'</span>] = [<span class="string">'SimHei'</span>]  <span class="comment"># 中文字体设置-黑体</span></span><br><span class="line">plt.rcParams[<span class="string">'axes.unicode_minus'</span>] = <span class="literal">False</span>  <span class="comment"># 解决保存图像是负号'-'显示为方块的问题</span></span><br><span class="line">sns.set(font=<span class="string">'SimHei'</span>)  <span class="comment"># 解决Seaborn中文显示问题</span></span><br></pre></td></tr></table></figure>
 
-<h1 id="根据某一字段计算"><a href="#根据某一字段计算" class="headerlink" title="根据某一字段计算"></a>根据某一字段计算</h1><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">List&lt;Student&gt; list = <span class="keyword">new</span> ArrayList&lt;&gt;();</span><br><span class="line">Double average= list.steam()</span><br><span class="line">    .mapToDouble(Student::getAge)</span><br><span class="line">    .average()</span><br><span class="line">    .getAsDouble();</span><br><span class="line"></span><br><span class="line">Double sum= list.steam()</span><br><span class="line">    .mapToDouble(Student::getAge)</span><br><span class="line">    .average()</span><br><span class="line">    .getAsDouble();</span><br></pre></td></tr></table></figure>
-
-<h1 id="获得属性内某一字段的结果集"><a href="#获得属性内某一字段的结果集" class="headerlink" title="获得属性内某一字段的结果集"></a>获得属性内某一字段的结果集</h1><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">List&lt;Student&gt; list = <span class="keyword">new</span> ArrayList&lt;&gt;();</span><br><span class="line">List&lt;String&gt; sex = list.steam()</span><br><span class="line">    .map(Student::getSex)</span><br><span class="line">    .collect(Collectors.toList());</span><br></pre></td></tr></table></figure>
-
+<h1 id="例1：（树状图、箱形图）比较地区与房屋单价金额数量的关系"><a href="#例1：（树状图、箱形图）比较地区与房屋单价金额数量的关系" class="headerlink" title="例1：（树状图、箱形图）比较地区与房屋单价金额数量的关系"></a>例1：（树状图、箱形图）比较地区与房屋单价金额数量的关系</h1><h2 id="1-数据结构"><a href="#1-数据结构" class="headerlink" title="1.  数据结构"></a>1.  数据结构</h2><h2 id="2-关系展示"><a href="#2-关系展示" class="headerlink" title="2.  关系展示"></a>2.  关系展示</h2><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 设置三个图表ax1,ax2,ax3的大小 : 3列1行 每个12×18大小</span></span><br><span class="line">f,[ax1,ax2,ax3] = plt.subplots(<span class="number">3</span>,<span class="number">1</span>,figsize=(<span class="number">12</span>,<span class="number">18</span>))</span><br><span class="line"></span><br><span class="line"><span class="comment"># 1.数据准备</span></span><br><span class="line">df_house_mean = house_df.groupby(<span class="string">'Region'</span>)[<span class="string">'houseSinglePrice'</span>].mean().sort_values(ascending=<span class="literal">False</span>).to_frame().reset_index()</span><br><span class="line"></span><br><span class="line"><span class="comment"># 1.数据展示</span></span><br><span class="line">sns.barplot(x=<span class="string">'Region'</span>, y=<span class="string">'houseSinglePrice'</span>, palette=<span class="string">'Blues_d'</span>, data=df_house_mean, ax=ax1)</span><br><span class="line">ax1.set_title(<span class="string">'成都各地区没平米单价对比'</span>)</span><br><span class="line">ax1.set_xlabel(<span class="string">'区域'</span>)</span><br><span class="line">ax1.set_ylabel(<span class="string">'每平米单价'</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment"># 2.数据准备</span></span><br><span class="line">df_house_count = house_df.groupby(<span class="string">'Region'</span>)[<span class="string">'houseId'</span>].count().sort_values(ascending=<span class="literal">False</span>).to_frame().reset_index()</span><br><span class="line">df_house_count.rename(columns = &#123;<span class="string">'houseId'</span>:<span class="string">'Count'</span>&#125;,inplace=<span class="string">'True'</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment"># 2.数据展示</span></span><br><span class="line">sns.barplot(x=<span class="string">'Region'</span>, y=<span class="string">'Count'</span>, palette=<span class="string">'Greens_d'</span>, data=df_house_count, ax=ax2)</span><br><span class="line">ax2.set_title(<span class="string">'成都各区二手房数量对比'</span>)</span><br><span class="line">ax2.set_xlabel(<span class="string">'区域'</span>)</span><br><span class="line">ax2.set_ylabel(<span class="string">'数量'</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment"># 3.数据展示</span></span><br><span class="line">sns.boxplot(x=<span class="string">'Region'</span>, y=<span class="string">'houseTotalMoney'</span>, data=house_df, ax=ax3)</span><br><span class="line">ax3.set_title(<span class="string">'成都各区二手房房屋总价'</span>)</span><br><span class="line">ax3.set_xlabel(<span class="string">'区域'</span>)</span><br><span class="line">ax3.set_ylabel(<span class="string">'房屋总价'</span>)</span><br></pre></td></tr></table></figure>
+<p><img src="/2020/03/03/python%E6%95%B0%E6%8D%AE%E5%8F%AF%E8%A7%86%E5%8C%96%E6%96%B9%E5%BC%8F/%E4%BE%8B1.png" alt="例1"></p>
+<h1 id="例2：（质量直方图、线性集中关系图、树状图）面积的大小比例，面积与价格关系"><a href="#例2：（质量直方图、线性集中关系图、树状图）面积的大小比例，面积与价格关系" class="headerlink" title="例2：（质量直方图、线性集中关系图、树状图）面积的大小比例，面积与价格关系"></a>例2：（质量直方图、线性集中关系图、树状图）面积的大小比例，面积与价格关系</h1><h2 id="1-数据结构-1"><a href="#1-数据结构-1" class="headerlink" title="1.  数据结构"></a>1.  数据结构</h2><h2 id="2-关系展示-1"><a href="#2-关系展示-1" class="headerlink" title="2.  关系展示"></a>2.  关系展示</h2><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 设置两个图表ax1,ax2的大小 : 1列2行 每个16×6大小</span></span><br><span class="line">f, [ax1,ax2] = plt.subplots(<span class="number">1</span>, <span class="number">2</span>, figsize=(<span class="number">16</span>, <span class="number">6</span>))</span><br><span class="line"></span><br><span class="line"><span class="comment"># 房屋面积</span></span><br><span class="line">sns.distplot(house_df[<span class="string">'houseBuildingArea'</span>], ax=ax1, color=<span class="string">'r'</span>)</span><br><span class="line">sns.kdeplot(house_df[<span class="string">'houseBuildingArea'</span>], shade=<span class="literal">True</span>, ax=ax1)</span><br><span class="line">ax1.set_xlabel(<span class="string">'面积'</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment"># 房屋面积和价格的关系</span></span><br><span class="line">sns.regplot(x=<span class="string">'houseBuildingArea'</span>, y=<span class="string">'houseTotalMoney'</span>, data=house_df, ax=ax2)</span><br><span class="line">ax2.set_xlabel(<span class="string">'面积'</span>)</span><br><span class="line">ax2.set_ylabel(<span class="string">'总价'</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment"># -------------------------------------------------------------------------------------------</span></span><br><span class="line"></span><br><span class="line">f, [ax1, ax2] = plt.subplots(<span class="number">1</span>, <span class="number">2</span>, figsize=(<span class="number">16</span>, <span class="number">8</span>))</span><br><span class="line"></span><br><span class="line"><span class="comment"># 数据准备</span></span><br><span class="line">elevator_df =  house_df[house_df[<span class="string">'houseElevator'</span>] != <span class="string">'暂无数据'</span>]</span><br><span class="line">elevator_df[<span class="string">'houseElevator'</span>].value_counts()</span><br><span class="line"></span><br><span class="line">sns.countplot(x = <span class="string">'houseElevator'</span>,data = elevator_df, ax=ax1)</span><br><span class="line">ax1.set_title(<span class="string">'有无电梯数量对比'</span>, fontsize=<span class="number">15</span>)</span><br><span class="line">ax1.set_xlabel(<span class="string">'是否有电梯'</span>)</span><br><span class="line">ax1.set_ylabel(<span class="string">'数量'</span>)</span><br><span class="line"></span><br><span class="line">sns.barplot(x=<span class="string">'houseElevator'</span>, y=<span class="string">'houseSinglePrice'</span>, data=elevator_df, ax=ax2)</span><br><span class="line">ax2.set_title(<span class="string">'有无电梯房价对比'</span>)</span><br><span class="line">ax2.set_xlabel(<span class="string">'是否有电梯'</span>)</span><br><span class="line">ax2.set_ylabel(<span class="string">'单价'</span>)</span><br></pre></td></tr></table></figure>
+<p><img src="/2020/03/03/python%E6%95%B0%E6%8D%AE%E5%8F%AF%E8%A7%86%E5%8C%96%E6%96%B9%E5%BC%8F/%E4%BE%8B2-1.png" alt="例2-1"><br><img src="/2020/03/03/python%E6%95%B0%E6%8D%AE%E5%8F%AF%E8%A7%86%E5%8C%96%E6%96%B9%E5%BC%8F/%E4%BE%8B2-2.png" alt="例2-2"></p>
 
       
 
@@ -224,7 +229,11 @@
 		<ul class="article-tag-list">
 			 
         		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">jdk</a>
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color2">python</a>
+        		</li>
+      		 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color2">pandas</a>
         		</li>
       		
 		</ul>
@@ -280,7 +289,7 @@
     <a class="close js-modal-close" href="javascript:;"><i class="icon icon-close"></i></a>
     <p>扫一扫，分享到微信</p>
     <div class="wx-qrcode">
-      <img src="//pan.baidu.com/share/qrcode?url=http://yoursite.com/2019/03/16/jdk8%20stream%20%E5%9F%BA%E6%9C%AC%E4%BD%BF%E7%94%A8/" alt="微信分享二维码">
+      <img src="//pan.baidu.com/share/qrcode?url=http://yoursite.com/2020/03/03/python%E6%95%B0%E6%8D%AE%E5%8F%AF%E8%A7%86%E5%8C%96%E6%96%B9%E5%BC%8F/" alt="微信分享二维码">
     </div>
 </div>
 
@@ -294,15 +303,11 @@
   
 <nav id="article-nav">
   
-    <a href="/2020/01/03/Dubbo%E4%BD%BF%E7%94%A8%E8%87%AA%E5%AE%9A%E4%B9%89Cluster%E6%96%B9%E6%B3%95/" id="article-nav-newer" class="article-nav-link-wrap">
-      <i class="icon-circle-left"></i>
-      <div class="article-nav-title">
-        
-          Dubbo使用自定义Cluster方法
-        
-      </div>
-    </a>
   
+    <a href="/2020/01/10/%E3%80%90%E6%8F%90%E5%8D%87%E8%8B%B1%E8%AF%AD%E4%B8%93%E6%A0%8F%E3%80%91Stackoverflow%E9%AB%98%E9%A2%91%E8%8B%B1%E6%96%87%E8%AF%8D%E6%B1%87%E6%B1%87%E6%80%BB/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">【提升英语专栏】Stackoverflow高频英文词汇汇总</div>
+      <i class="icon-circle-right"></i>
+    </a>
   
 </nav>
 
