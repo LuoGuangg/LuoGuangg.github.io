@@ -159,7 +159,7 @@
         
   
     <h1 itemprop="name">
-      <a class="article-title" href="/2020/03/03/python%E6%95%B0%E6%8D%AE%E5%8F%AF%E8%A7%86%E5%8C%96%E6%96%B9%E5%BC%8F/">python数据可视化方式（持续更新）</a>
+      <a class="article-title" href="/2020/03/03/python%E6%95%B0%E6%8D%AE%E5%8F%AF%E8%A7%86%E5%8C%96%E6%96%B9%E5%BC%8F/">python数据可视化方式</a>
     </h1>
   
 
@@ -178,15 +178,137 @@
 <li><a href="#解决图表显示方块丢失中文问题">解决图表显示方块丢失中文问题</a></li>
 <li><a href="#例1：（树状图、箱形图）比较地区与房屋单价金额数量的关系">比较地区与房屋单价金额数量的关系</a></li>
 <li><a href="#例2：（质量直方图、线性集中关系图、树状图）面积的大小比例，面积与价格关系">房屋面积的大小比例，面积与价格关系</a></li>
+<li><a href="#例3：描述数据集不同属性间的关系">直观比较多个属性间的关系</a></li>
+<li><a href="#例4：非连续性数据，分类与数值散点图展示">分类形数据散点图绘制</a></li>
+<li><a href="#例5：点图展示不同时候PV值变化">点图展示PV变化情况</a></li>
 </ul>
 <h1 id="初始准备"><a href="#初始准备" class="headerlink" title="初始准备"></a>初始准备</h1><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> pandas <span class="keyword">as</span> pd</span><br><span class="line"><span class="keyword">import</span> matplotlib.pyplot <span class="keyword">as</span> plt</span><br><span class="line"><span class="keyword">import</span> seaborn <span class="keyword">as</span> sns</span><br><span class="line"><span class="keyword">import</span> re</span><br></pre></td></tr></table></figure>
 
 <h1 id="解决图表显示方块丢失中文问题"><a href="#解决图表显示方块丢失中文问题" class="headerlink" title="解决图表显示方块丢失中文问题"></a>解决图表显示方块丢失中文问题</h1><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">plt.rcParams[<span class="string">'font.sans-serif'</span>] = [<span class="string">'SimHei'</span>]  <span class="comment"># 中文字体设置-黑体</span></span><br><span class="line">plt.rcParams[<span class="string">'axes.unicode_minus'</span>] = <span class="literal">False</span>  <span class="comment"># 解决保存图像是负号'-'显示为方块的问题</span></span><br><span class="line">sns.set(font=<span class="string">'SimHei'</span>)  <span class="comment"># 解决Seaborn中文显示问题</span></span><br></pre></td></tr></table></figure>
 
-<h1 id="例1：（树状图、箱形图）比较地区与房屋单价金额数量的关系"><a href="#例1：（树状图、箱形图）比较地区与房屋单价金额数量的关系" class="headerlink" title="例1：（树状图、箱形图）比较地区与房屋单价金额数量的关系"></a>例1：（树状图、箱形图）比较地区与房屋单价金额数量的关系</h1><h2 id="1-数据结构"><a href="#1-数据结构" class="headerlink" title="1.  数据结构"></a>1.  数据结构</h2><h2 id="2-关系展示"><a href="#2-关系展示" class="headerlink" title="2.  关系展示"></a>2.  关系展示</h2><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 设置三个图表ax1,ax2,ax3的大小 : 3列1行 每个12×18大小</span></span><br><span class="line">f,[ax1,ax2,ax3] = plt.subplots(<span class="number">3</span>,<span class="number">1</span>,figsize=(<span class="number">12</span>,<span class="number">18</span>))</span><br><span class="line"></span><br><span class="line"><span class="comment"># 1.数据准备</span></span><br><span class="line">df_house_mean = house_df.groupby(<span class="string">'Region'</span>)[<span class="string">'houseSinglePrice'</span>].mean().sort_values(ascending=<span class="literal">False</span>).to_frame().reset_index()</span><br><span class="line"></span><br><span class="line"><span class="comment"># 1.数据展示</span></span><br><span class="line">sns.barplot(x=<span class="string">'Region'</span>, y=<span class="string">'houseSinglePrice'</span>, palette=<span class="string">'Blues_d'</span>, data=df_house_mean, ax=ax1)</span><br><span class="line">ax1.set_title(<span class="string">'成都各地区没平米单价对比'</span>)</span><br><span class="line">ax1.set_xlabel(<span class="string">'区域'</span>)</span><br><span class="line">ax1.set_ylabel(<span class="string">'每平米单价'</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment"># 2.数据准备</span></span><br><span class="line">df_house_count = house_df.groupby(<span class="string">'Region'</span>)[<span class="string">'houseId'</span>].count().sort_values(ascending=<span class="literal">False</span>).to_frame().reset_index()</span><br><span class="line">df_house_count.rename(columns = &#123;<span class="string">'houseId'</span>:<span class="string">'Count'</span>&#125;,inplace=<span class="string">'True'</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment"># 2.数据展示</span></span><br><span class="line">sns.barplot(x=<span class="string">'Region'</span>, y=<span class="string">'Count'</span>, palette=<span class="string">'Greens_d'</span>, data=df_house_count, ax=ax2)</span><br><span class="line">ax2.set_title(<span class="string">'成都各区二手房数量对比'</span>)</span><br><span class="line">ax2.set_xlabel(<span class="string">'区域'</span>)</span><br><span class="line">ax2.set_ylabel(<span class="string">'数量'</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment"># 3.数据展示</span></span><br><span class="line">sns.boxplot(x=<span class="string">'Region'</span>, y=<span class="string">'houseTotalMoney'</span>, data=house_df, ax=ax3)</span><br><span class="line">ax3.set_title(<span class="string">'成都各区二手房房屋总价'</span>)</span><br><span class="line">ax3.set_xlabel(<span class="string">'区域'</span>)</span><br><span class="line">ax3.set_ylabel(<span class="string">'房屋总价'</span>)</span><br></pre></td></tr></table></figure>
+<h1 id="例1：（树状图、箱形图）比较地区与房屋单价金额数量的关系"><a href="#例1：（树状图、箱形图）比较地区与房屋单价金额数量的关系" class="headerlink" title="例1：（树状图、箱形图）比较地区与房屋单价金额数量的关系"></a>例1：（树状图、箱形图）比较地区与房屋单价金额数量的关系</h1><h2 id="1-数据结构"><a href="#1-数据结构" class="headerlink" title="1.  数据结构"></a>1.  数据结构</h2><pre><code>&lt;class &apos;pandas.core.frame.DataFrame&apos;&gt;
+RangeIndex: 2993 entries, 0 to 2992
+Data columns (total 32 columns):
+houseId                   2993 non-null int64
+houseTitle                2993 non-null object
+houseTotalMoney           2993 non-null object
+houseSinglePrice          2993 non-null object
+houseDownPayment          2993 non-null object
+houseGardenName           2993 non-null object
+houseLocation             2993 non-null object
+houseNumber               2993 non-null int64
+houseType                 2993 non-null object
+houseFloor                2993 non-null object
+houseBuildingArea         2993 non-null object
+houseStructure            2993 non-null object
+houseInnerArea            2993 non-null object
+houseBuildingType         2993 non-null object
+houseOrientation          2993 non-null object
+houseBuildingStructure    2993 non-null object
+houseDecoration           2993 non-null object
+houseElevatorRatio        2985 non-null object
+houseElevator             2985 non-null object
+housePrivilege            2985 non-null object
+houseListDate             2993 non-null object
+houseTradeProperty        2993 non-null object
+houseLastTrade            2993 non-null object
+houseUsage                2993 non-null object
+houseAgeLimit             2993 non-null object
+housePrivilegeProperty    2993 non-null object
+housePledge               2993 non-null object
+houseRecord               2993 non-null object
+houseImg                  2890 non-null object
+houseUrl                  2993 non-null object
+houseRefererUrl           2993 non-null object
+houseCrawlTime            2993 non-null object
+dtypes: int64(2), object(30)
+memory usage: 748.3+ KB</code></pre><h2 id="2-关系展示"><a href="#2-关系展示" class="headerlink" title="2.  关系展示"></a>2.  关系展示</h2><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 设置三个图表ax1,ax2,ax3的大小 : 3列1行 每个12×18大小</span></span><br><span class="line">f,[ax1,ax2,ax3] = plt.subplots(<span class="number">3</span>,<span class="number">1</span>,figsize=(<span class="number">12</span>,<span class="number">18</span>))</span><br><span class="line"></span><br><span class="line"><span class="comment"># 1.数据准备</span></span><br><span class="line">df_house_mean = house_df.groupby(<span class="string">'Region'</span>)[<span class="string">'houseSinglePrice'</span>].mean().sort_values(ascending=<span class="literal">False</span>).to_frame().reset_index()</span><br><span class="line"></span><br><span class="line"><span class="comment"># 1.数据展示</span></span><br><span class="line">sns.barplot(x=<span class="string">'Region'</span>, y=<span class="string">'houseSinglePrice'</span>, palette=<span class="string">'Blues_d'</span>, data=df_house_mean, ax=ax1)</span><br><span class="line">ax1.set_title(<span class="string">'成都各地区没平米单价对比'</span>)</span><br><span class="line">ax1.set_xlabel(<span class="string">'区域'</span>)</span><br><span class="line">ax1.set_ylabel(<span class="string">'每平米单价'</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment"># 2.数据准备</span></span><br><span class="line">df_house_count = house_df.groupby(<span class="string">'Region'</span>)[<span class="string">'houseId'</span>].count().sort_values(ascending=<span class="literal">False</span>).to_frame().reset_index()</span><br><span class="line">df_house_count.rename(columns = &#123;<span class="string">'houseId'</span>:<span class="string">'Count'</span>&#125;,inplace=<span class="string">'True'</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment"># 2.数据展示</span></span><br><span class="line">sns.barplot(x=<span class="string">'Region'</span>, y=<span class="string">'Count'</span>, palette=<span class="string">'Greens_d'</span>, data=df_house_count, ax=ax2)</span><br><span class="line">ax2.set_title(<span class="string">'成都各区二手房数量对比'</span>)</span><br><span class="line">ax2.set_xlabel(<span class="string">'区域'</span>)</span><br><span class="line">ax2.set_ylabel(<span class="string">'数量'</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment"># 3.数据展示</span></span><br><span class="line">sns.boxplot(x=<span class="string">'Region'</span>, y=<span class="string">'houseTotalMoney'</span>, data=house_df, ax=ax3)</span><br><span class="line">ax3.set_title(<span class="string">'成都各区二手房房屋总价'</span>)</span><br><span class="line">ax3.set_xlabel(<span class="string">'区域'</span>)</span><br><span class="line">ax3.set_ylabel(<span class="string">'房屋总价'</span>)</span><br></pre></td></tr></table></figure>
 <p><img src="/2020/03/03/python%E6%95%B0%E6%8D%AE%E5%8F%AF%E8%A7%86%E5%8C%96%E6%96%B9%E5%BC%8F/%E4%BE%8B1.png" alt="例1"></p>
-<h1 id="例2：（质量直方图、线性集中关系图、树状图）面积的大小比例，面积与价格关系"><a href="#例2：（质量直方图、线性集中关系图、树状图）面积的大小比例，面积与价格关系" class="headerlink" title="例2：（质量直方图、线性集中关系图、树状图）面积的大小比例，面积与价格关系"></a>例2：（质量直方图、线性集中关系图、树状图）面积的大小比例，面积与价格关系</h1><h2 id="1-数据结构-1"><a href="#1-数据结构-1" class="headerlink" title="1.  数据结构"></a>1.  数据结构</h2><h2 id="2-关系展示-1"><a href="#2-关系展示-1" class="headerlink" title="2.  关系展示"></a>2.  关系展示</h2><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 设置两个图表ax1,ax2的大小 : 1列2行 每个16×6大小</span></span><br><span class="line">f, [ax1,ax2] = plt.subplots(<span class="number">1</span>, <span class="number">2</span>, figsize=(<span class="number">16</span>, <span class="number">6</span>))</span><br><span class="line"></span><br><span class="line"><span class="comment"># 房屋面积</span></span><br><span class="line">sns.distplot(house_df[<span class="string">'houseBuildingArea'</span>], ax=ax1, color=<span class="string">'r'</span>)</span><br><span class="line">sns.kdeplot(house_df[<span class="string">'houseBuildingArea'</span>], shade=<span class="literal">True</span>, ax=ax1)</span><br><span class="line">ax1.set_xlabel(<span class="string">'面积'</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment"># 房屋面积和价格的关系</span></span><br><span class="line">sns.regplot(x=<span class="string">'houseBuildingArea'</span>, y=<span class="string">'houseTotalMoney'</span>, data=house_df, ax=ax2)</span><br><span class="line">ax2.set_xlabel(<span class="string">'面积'</span>)</span><br><span class="line">ax2.set_ylabel(<span class="string">'总价'</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment"># -------------------------------------------------------------------------------------------</span></span><br><span class="line"></span><br><span class="line">f, [ax1, ax2] = plt.subplots(<span class="number">1</span>, <span class="number">2</span>, figsize=(<span class="number">16</span>, <span class="number">8</span>))</span><br><span class="line"></span><br><span class="line"><span class="comment"># 数据准备</span></span><br><span class="line">elevator_df =  house_df[house_df[<span class="string">'houseElevator'</span>] != <span class="string">'暂无数据'</span>]</span><br><span class="line">elevator_df[<span class="string">'houseElevator'</span>].value_counts()</span><br><span class="line"></span><br><span class="line">sns.countplot(x = <span class="string">'houseElevator'</span>,data = elevator_df, ax=ax1)</span><br><span class="line">ax1.set_title(<span class="string">'有无电梯数量对比'</span>, fontsize=<span class="number">15</span>)</span><br><span class="line">ax1.set_xlabel(<span class="string">'是否有电梯'</span>)</span><br><span class="line">ax1.set_ylabel(<span class="string">'数量'</span>)</span><br><span class="line"></span><br><span class="line">sns.barplot(x=<span class="string">'houseElevator'</span>, y=<span class="string">'houseSinglePrice'</span>, data=elevator_df, ax=ax2)</span><br><span class="line">ax2.set_title(<span class="string">'有无电梯房价对比'</span>)</span><br><span class="line">ax2.set_xlabel(<span class="string">'是否有电梯'</span>)</span><br><span class="line">ax2.set_ylabel(<span class="string">'单价'</span>)</span><br></pre></td></tr></table></figure>
+<h1 id="例2：（质量直方图、线性集中关系图、树状图）面积的大小比例，面积与价格关系"><a href="#例2：（质量直方图、线性集中关系图、树状图）面积的大小比例，面积与价格关系" class="headerlink" title="例2：（质量直方图、线性集中关系图、树状图）面积的大小比例，面积与价格关系"></a>例2：（质量直方图、线性集中关系图、树状图）面积的大小比例，面积与价格关系</h1><h2 id="1-数据结构-1"><a href="#1-数据结构-1" class="headerlink" title="1.  数据结构"></a>1.  数据结构</h2><pre><code>&lt;class &apos;pandas.core.frame.DataFrame&apos;&gt;
+RangeIndex: 2993 entries, 0 to 2992
+Data columns (total 32 columns):
+houseId                   2993 non-null int64
+houseTitle                2993 non-null object
+houseTotalMoney           2993 non-null object
+houseSinglePrice          2993 non-null object
+houseDownPayment          2993 non-null object
+houseGardenName           2993 non-null object
+houseLocation             2993 non-null object
+houseNumber               2993 non-null int64
+houseType                 2993 non-null object
+houseFloor                2993 non-null object
+houseBuildingArea         2993 non-null object
+houseStructure            2993 non-null object
+houseInnerArea            2993 non-null object
+houseBuildingType         2993 non-null object
+houseOrientation          2993 non-null object
+houseBuildingStructure    2993 non-null object
+houseDecoration           2993 non-null object
+houseElevatorRatio        2985 non-null object
+houseElevator             2985 non-null object
+housePrivilege            2985 non-null object
+houseListDate             2993 non-null object
+houseTradeProperty        2993 non-null object
+houseLastTrade            2993 non-null object
+houseUsage                2993 non-null object
+houseAgeLimit             2993 non-null object
+housePrivilegeProperty    2993 non-null object
+housePledge               2993 non-null object
+houseRecord               2993 non-null object
+houseImg                  2890 non-null object
+houseUrl                  2993 non-null object
+houseRefererUrl           2993 non-null object
+houseCrawlTime            2993 non-null object
+dtypes: int64(2), object(30)
+memory usage: 748.3+ KB</code></pre><h2 id="2-关系展示-1"><a href="#2-关系展示-1" class="headerlink" title="2.  关系展示"></a>2.  关系展示</h2><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 设置两个图表ax1,ax2的大小 : 1列2行 每个16×6大小</span></span><br><span class="line">f, [ax1,ax2] = plt.subplots(<span class="number">1</span>, <span class="number">2</span>, figsize=(<span class="number">16</span>, <span class="number">6</span>))</span><br><span class="line"></span><br><span class="line"><span class="comment"># 房屋面积</span></span><br><span class="line">sns.distplot(house_df[<span class="string">'houseBuildingArea'</span>], ax=ax1, color=<span class="string">'r'</span>)</span><br><span class="line">sns.kdeplot(house_df[<span class="string">'houseBuildingArea'</span>], shade=<span class="literal">True</span>, ax=ax1)</span><br><span class="line">ax1.set_xlabel(<span class="string">'面积'</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment"># 房屋面积和价格的关系</span></span><br><span class="line">sns.regplot(x=<span class="string">'houseBuildingArea'</span>, y=<span class="string">'houseTotalMoney'</span>, data=house_df, ax=ax2)</span><br><span class="line">ax2.set_xlabel(<span class="string">'面积'</span>)</span><br><span class="line">ax2.set_ylabel(<span class="string">'总价'</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment"># -------------------------------------------------------------------------------------------</span></span><br><span class="line"></span><br><span class="line">f, [ax1, ax2] = plt.subplots(<span class="number">1</span>, <span class="number">2</span>, figsize=(<span class="number">16</span>, <span class="number">8</span>))</span><br><span class="line"></span><br><span class="line"><span class="comment"># 数据准备</span></span><br><span class="line">elevator_df =  house_df[house_df[<span class="string">'houseElevator'</span>] != <span class="string">'暂无数据'</span>]</span><br><span class="line">elevator_df[<span class="string">'houseElevator'</span>].value_counts()</span><br><span class="line"></span><br><span class="line">sns.countplot(x = <span class="string">'houseElevator'</span>,data = elevator_df, ax=ax1)</span><br><span class="line">ax1.set_title(<span class="string">'有无电梯数量对比'</span>, fontsize=<span class="number">15</span>)</span><br><span class="line">ax1.set_xlabel(<span class="string">'是否有电梯'</span>)</span><br><span class="line">ax1.set_ylabel(<span class="string">'数量'</span>)</span><br><span class="line"></span><br><span class="line">sns.barplot(x=<span class="string">'houseElevator'</span>, y=<span class="string">'houseSinglePrice'</span>, data=elevator_df, ax=ax2)</span><br><span class="line">ax2.set_title(<span class="string">'有无电梯房价对比'</span>)</span><br><span class="line">ax2.set_xlabel(<span class="string">'是否有电梯'</span>)</span><br><span class="line">ax2.set_ylabel(<span class="string">'单价'</span>)</span><br></pre></td></tr></table></figure>
 <p><img src="/2020/03/03/python%E6%95%B0%E6%8D%AE%E5%8F%AF%E8%A7%86%E5%8C%96%E6%96%B9%E5%BC%8F/%E4%BE%8B2-1.png" alt="例2-1"><br><img src="/2020/03/03/python%E6%95%B0%E6%8D%AE%E5%8F%AF%E8%A7%86%E5%8C%96%E6%96%B9%E5%BC%8F/%E4%BE%8B2-2.png" alt="例2-2"></p>
+<h1 id="例3：描述数据集不同属性间的关系"><a href="#例3：描述数据集不同属性间的关系" class="headerlink" title="例3：描述数据集不同属性间的关系"></a>例3：描述数据集不同属性间的关系</h1><h2 id="1-数据结构-2"><a href="#1-数据结构-2" class="headerlink" title="1.  数据结构"></a>1.  数据结构</h2><pre><code>&lt;class &apos;pandas.core.frame.DataFrame&apos;&gt;
+RangeIndex: 23440 entries, 0 to 23439
+Data columns (total 11 columns):
+简介      23440 non-null object
+小区      23440 non-null object
+户型      23440 non-null object
+面积      23440 non-null float64
+关注人数    23440 non-null float64
+观看次数    23440 non-null float64
+发布时间    23440 non-null int64
+房价      23440 non-null float64
+单价/平    23440 non-null float64
+城区      23440 non-null object
+经纬度     23440 non-null object
+dtypes: float64(5), int64(1), object(5)
+memory usage: 2.0+ MB</code></pre><h2 id="2-关系展示-2"><a href="#2-关系展示-2" class="headerlink" title="2.  关系展示"></a>2.  关系展示</h2><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># hue参数进行分组展示，可选</span></span><br><span class="line"><span class="comment"># sns.pairplot(data,kind="reg",diag_kind="kde") 拟合回归直线</span></span><br><span class="line"><span class="comment"># kind 控制非对角线</span></span><br><span class="line"><span class="comment"># diag_kind 控制对角线</span></span><br><span class="line">sns.pairplot(data,hue=<span class="string">"城区"</span>)</span><br></pre></td></tr></table></figure>
+
+<p><img src="/2020/03/03/python%E6%95%B0%E6%8D%AE%E5%8F%AF%E8%A7%86%E5%8C%96%E6%96%B9%E5%BC%8F/%E4%BE%8B3-1.png" alt="例3-1"></p>
+<h1 id="例4：非连续性数据，分类与数值散点图展示"><a href="#例4：非连续性数据，分类与数值散点图展示" class="headerlink" title="例4：非连续性数据，分类与数值散点图展示"></a>例4：非连续性数据，分类与数值散点图展示</h1><h2 id="1-数据结构-3"><a href="#1-数据结构-3" class="headerlink" title="1.  数据结构"></a>1.  数据结构</h2><pre><code>&lt;class &apos;pandas.core.frame.DataFrame&apos;&gt;
+RangeIndex: 23440 entries, 0 to 23439
+Data columns (total 11 columns):
+简介      23440 non-null object
+小区      23440 non-null object
+户型      23440 non-null object
+面积      23440 non-null float64
+关注人数    23440 non-null float64
+观看次数    23440 non-null float64
+发布时间    23440 non-null int64
+房价      23440 non-null float64
+单价/平    23440 non-null float64
+城区      23440 non-null object
+经纬度     23440 non-null object
+dtypes: float64(5), int64(1), object(5)
+memory usage: 2.0+ MB</code></pre><h2 id="2-关系展示-3"><a href="#2-关系展示-3" class="headerlink" title="2.  关系展示"></a>2.  关系展示</h2><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">plt.subplots(figsize=(<span class="number">25</span>,<span class="number">8</span>))</span><br><span class="line">plt.scatter(data[<span class="string">'户型'</span>],data[<span class="string">'房价'</span>],color=<span class="string">'red'</span>)</span><br></pre></td></tr></table></figure>
+<p><img src="/2020/03/03/python%E6%95%B0%E6%8D%AE%E5%8F%AF%E8%A7%86%E5%8C%96%E6%96%B9%E5%BC%8F/%E4%BE%8B4-1.png" alt="例4-1"></p>
+<h1 id="例5：点图展示不同时候PV值变化"><a href="#例5：点图展示不同时候PV值变化" class="headerlink" title="例5：点图展示不同时候PV值变化"></a>例5：点图展示不同时候PV值变化</h1><h2 id="1-数据结构-4"><a href="#1-数据结构-4" class="headerlink" title="1.  数据结构"></a>1.  数据结构</h2><pre><code>&lt;class &apos;pandas.core.frame.DataFrame&apos;&gt;
+RangeIndex: 12256906 entries, 0 to 12256905
+Data columns (total 6 columns):
+user_id          int64
+item_id          int64
+behavior_type    int64
+user_geohash     object
+item_category    int64
+time             object
+dtypes: int64(4), object(2)
+memory usage: 561.1+ MB</code></pre><h2 id="2-关系展示-4"><a href="#2-关系展示-4" class="headerlink" title="2.  关系展示"></a>2.  关系展示</h2><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">pv_detail = data_user.groupby([<span class="string">'behavior_type'</span>,<span class="string">'hour'</span>])[<span class="string">'user_id'</span>].count().reset_index().rename(columns=&#123;<span class="string">'user_id'</span>:<span class="string">'total_pv'</span>&#125;)</span><br><span class="line">sns.pointplot(x=<span class="string">'hour'</span>,y=<span class="string">'total_pv'</span>,hue=<span class="string">'behavior_type'</span>,data = pv_detail[pv_detail[<span class="string">'behavior_type'</span>] != <span class="number">1</span>])</span><br></pre></td></tr></table></figure>
+<p><img src="/2020/03/03/python%E6%95%B0%E6%8D%AE%E5%8F%AF%E8%A7%86%E5%8C%96%E6%96%B9%E5%BC%8F/%E4%BE%8B5-1.png" alt="例5-1"></p>
 
       
 
