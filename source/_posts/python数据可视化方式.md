@@ -1,5 +1,5 @@
 ---
-title: python数据可视化方式（持续更新）
+title: python数据可视化方式
 date: 2020-03-03 10:43:06
 tags: 
   - python
@@ -13,6 +13,9 @@ tags:
 * [解决图表显示方块丢失中文问题](#解决图表显示方块丢失中文问题)
 * [比较地区与房屋单价金额数量的关系](#例1：（树状图、箱形图）比较地区与房屋单价金额数量的关系)
 * [房屋面积的大小比例，面积与价格关系](#例2：（质量直方图、线性集中关系图、树状图）面积的大小比例，面积与价格关系)
+* [直观比较多个属性间的关系](#例3：描述数据集不同属性间的关系)
+* [分类形数据散点图绘制](#例4：非连续性数据，分类与数值散点图展示)
+* [点图展示PV变化情况](#例5：点图展示不同时候PV值变化)
 
 # 初始准备
 ````python
@@ -32,6 +35,44 @@ tags:
 # 例1：（树状图、箱形图）比较地区与房屋单价金额数量的关系
 
 ## 1.  数据结构
+  
+    <class 'pandas.core.frame.DataFrame'>
+    RangeIndex: 2993 entries, 0 to 2992
+    Data columns (total 32 columns):
+    houseId                   2993 non-null int64
+    houseTitle                2993 non-null object
+    houseTotalMoney           2993 non-null object
+    houseSinglePrice          2993 non-null object
+    houseDownPayment          2993 non-null object
+    houseGardenName           2993 non-null object
+    houseLocation             2993 non-null object
+    houseNumber               2993 non-null int64
+    houseType                 2993 non-null object
+    houseFloor                2993 non-null object
+    houseBuildingArea         2993 non-null object
+    houseStructure            2993 non-null object
+    houseInnerArea            2993 non-null object
+    houseBuildingType         2993 non-null object
+    houseOrientation          2993 non-null object
+    houseBuildingStructure    2993 non-null object
+    houseDecoration           2993 non-null object
+    houseElevatorRatio        2985 non-null object
+    houseElevator             2985 non-null object
+    housePrivilege            2985 non-null object
+    houseListDate             2993 non-null object
+    houseTradeProperty        2993 non-null object
+    houseLastTrade            2993 non-null object
+    houseUsage                2993 non-null object
+    houseAgeLimit             2993 non-null object
+    housePrivilegeProperty    2993 non-null object
+    housePledge               2993 non-null object
+    houseRecord               2993 non-null object
+    houseImg                  2890 non-null object
+    houseUrl                  2993 non-null object
+    houseRefererUrl           2993 non-null object
+    houseCrawlTime            2993 non-null object
+    dtypes: int64(2), object(30)
+    memory usage: 748.3+ KB
 
 ## 2.  关系展示
 ````python
@@ -68,6 +109,44 @@ tags:
 # 例2：（质量直方图、线性集中关系图、树状图）面积的大小比例，面积与价格关系
 
 ## 1.  数据结构
+  
+    <class 'pandas.core.frame.DataFrame'>
+    RangeIndex: 2993 entries, 0 to 2992
+    Data columns (total 32 columns):
+    houseId                   2993 non-null int64
+    houseTitle                2993 non-null object
+    houseTotalMoney           2993 non-null object
+    houseSinglePrice          2993 non-null object
+    houseDownPayment          2993 non-null object
+    houseGardenName           2993 non-null object
+    houseLocation             2993 non-null object
+    houseNumber               2993 non-null int64
+    houseType                 2993 non-null object
+    houseFloor                2993 non-null object
+    houseBuildingArea         2993 non-null object
+    houseStructure            2993 non-null object
+    houseInnerArea            2993 non-null object
+    houseBuildingType         2993 non-null object
+    houseOrientation          2993 non-null object
+    houseBuildingStructure    2993 non-null object
+    houseDecoration           2993 non-null object
+    houseElevatorRatio        2985 non-null object
+    houseElevator             2985 non-null object
+    housePrivilege            2985 non-null object
+    houseListDate             2993 non-null object
+    houseTradeProperty        2993 non-null object
+    houseLastTrade            2993 non-null object
+    houseUsage                2993 non-null object
+    houseAgeLimit             2993 non-null object
+    housePrivilegeProperty    2993 non-null object
+    housePledge               2993 non-null object
+    houseRecord               2993 non-null object
+    houseImg                  2890 non-null object
+    houseUrl                  2993 non-null object
+    houseRefererUrl           2993 non-null object
+    houseCrawlTime            2993 non-null object
+    dtypes: int64(2), object(30)
+    memory usage: 748.3+ KB
 
 ## 2.  关系展示
 ````python
@@ -104,3 +183,87 @@ tags:
 ````
 ![例2-1](python数据可视化方式/例2-1.png)
 ![例2-2](python数据可视化方式/例2-2.png)
+
+# 例3：描述数据集不同属性间的关系
+
+## 1.  数据结构
+    
+    <class 'pandas.core.frame.DataFrame'>
+    RangeIndex: 23440 entries, 0 to 23439
+    Data columns (total 11 columns):
+    简介      23440 non-null object
+    小区      23440 non-null object
+    户型      23440 non-null object
+    面积      23440 non-null float64
+    关注人数    23440 non-null float64
+    观看次数    23440 non-null float64
+    发布时间    23440 non-null int64
+    房价      23440 non-null float64
+    单价/平    23440 non-null float64
+    城区      23440 non-null object
+    经纬度     23440 non-null object
+    dtypes: float64(5), int64(1), object(5)
+    memory usage: 2.0+ MB
+
+## 2.  关系展示
+````python
+   # hue参数进行分组展示，可选
+   # sns.pairplot(data,kind="reg",diag_kind="kde") 拟合回归直线
+   # kind 控制非对角线
+   # diag_kind 控制对角线
+   sns.pairplot(data,hue="城区")
+````
+
+![例3-1](python数据可视化方式/例3-1.png)
+
+# 例4：非连续性数据，分类与数值散点图展示
+
+## 1.  数据结构
+    
+    <class 'pandas.core.frame.DataFrame'>
+    RangeIndex: 23440 entries, 0 to 23439
+    Data columns (total 11 columns):
+    简介      23440 non-null object
+    小区      23440 non-null object
+    户型      23440 non-null object
+    面积      23440 non-null float64
+    关注人数    23440 non-null float64
+    观看次数    23440 non-null float64
+    发布时间    23440 non-null int64
+    房价      23440 non-null float64
+    单价/平    23440 non-null float64
+    城区      23440 non-null object
+    经纬度     23440 non-null object
+    dtypes: float64(5), int64(1), object(5)
+    memory usage: 2.0+ MB
+
+## 2.  关系展示
+````python
+   plt.subplots(figsize=(25,8))
+   plt.scatter(data['户型'],data['房价'],color='red')
+````
+![例4-1](python数据可视化方式/例4-1.png)
+
+# 例5：点图展示不同时候PV值变化
+
+## 1.  数据结构
+    
+    
+    <class 'pandas.core.frame.DataFrame'>
+    RangeIndex: 12256906 entries, 0 to 12256905
+    Data columns (total 6 columns):
+    user_id          int64
+    item_id          int64
+    behavior_type    int64
+    user_geohash     object
+    item_category    int64
+    time             object
+    dtypes: int64(4), object(2)
+    memory usage: 561.1+ MB
+
+## 2.  关系展示
+````python
+   pv_detail = data_user.groupby(['behavior_type','hour'])['user_id'].count().reset_index().rename(columns={'user_id':'total_pv'})
+   sns.pointplot(x='hour',y='total_pv',hue='behavior_type',data = pv_detail[pv_detail['behavior_type'] != 1])
+````
+![例5-1](python数据可视化方式/例5-1.png)
